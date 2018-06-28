@@ -8,6 +8,7 @@ import Footer from "../../components/footer/";
 
 import Home from "../../pages/home";
 import About from "../../pages/about";
+import meta from "./meta";
 
 class Landing extends Component {
     render() {
@@ -15,8 +16,8 @@ class Landing extends Component {
 
         return(
             <React.Fragment>
-                <Head />
-                <Body>  
+                <Head styles={meta.styles} />
+                <Body scripts={meta.scripts}>
                     <Navigation />
                     <Route path={path} exact component={Home}/>
                     <Route path={`${path}/index`} exact component={Home}/>

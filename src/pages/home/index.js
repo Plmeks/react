@@ -1,54 +1,25 @@
 import React, { Component } from 'react';
 import css from "./styles.scss";
+import { connect } from 'react-redux';
 
-import Meta from "../../components/meta";
-import {meta, scripts, styles} from "./meta";
-
+import meta from "./meta";
+import {setMeta, setStyles, setScripts} from "../../redux/actions/meta";
+import {fetchUser, receiveUser} from "../../redux/actions/vk";
 
 class Home extends Component {
-  // state = {
-  //   meta: null
-  // };
-
   componentDidMount() {
-    // this.props.changeMeta(this.props.meta);
-    // this.vkUser("1")
-    // .then(user => {
-    //   const {first_name, last_name} = user;
-    //   this.setState({
-    //     meta: {
-    //       ...meta,
-    //       title: `${meta.title} ${first_name} ${last_name}`
-    //     }
-    //   });
-    //   console.log(this.state.meta);
-    // });
+    this.props.setMeta(meta);
+    
+    this.props.receiveUser({first_name: "*name is fetching...*"});
+    this.props.fetchUser("1");
   }
 
-  // vk = {
-  //   proxy: "https://cors-anywhere.herokuapp.com/",
-  //   token: "a24e6f1ce4a82c65c78bae357b82698b042d163541bb886c12cf6d5ad024bf1c14f32925af148ad0edcad",
-  //   version: "5.80"
-  // };
-  
-  // vkUser = (id) => {
-  //   let target =`${this.vk.proxy}https://api.vk.com/method/users.get?user_ids=${id}&access_token=${this.vk.token}&v=${this.vk.version}`;
-    
-  //   return new Promise((resolve, reject) => {
-  //       fetch(target)
-  //       .then(res => res.json())
-  //       .then(user => {
-  //           resolve(user.response[0]);
-  //       });
-  //   })
-  // };
-
   render() {
+    const {first_name, last_name} = this.props.VkReducer;
     return (
       <React.Fragment>
-        <Meta meta={meta} />
         <div className={css.home}>
-          <h2>Home</h2>
+          <h2>Welcome, {first_name} {last_name}</h2>
           <p className={css.title}>Title</p>
         </div>
       </React.Fragment>
@@ -56,4 +27,7 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default connect(state => state, {
+  setMeta, setStyles, setScripts, 
+  fetchUser, receiveUser
+})(Home);

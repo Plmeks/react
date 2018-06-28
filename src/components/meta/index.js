@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { bindActionCreators } from 'redux';
-import * as MetaActions from "../../redux/actions/meta";
+import {setMeta} from "../../redux/actions/meta";
 
 class Meta extends Component {
   componentDidMount() {
-    this.props.changeMeta(this.props.meta);
+    this.props.setMeta(this.props.meta);
   }
 
   render() {
@@ -17,7 +16,5 @@ class Meta extends Component {
 
 export default connect(
   null,
-  (dispatch) => ({
-    changeMeta: bindActionCreators(MetaActions.changeMeta, dispatch)
-  })
+  {setMeta}
 )(Meta);

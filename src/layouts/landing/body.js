@@ -1,23 +1,31 @@
-import React from "react";
+import React, {Component} from "react";
+import {connect} from "react-redux";
 
-export default (props) => (
-    <body>
-        <noscript>
-        You need to enable JavaScript to run this app.
-        </noscript>
+class Body extends Component {
+    render() {
+        const scriptsLanding = this.props.scripts.map(script => (
+            <script src={`bower_components/${script}`}></script>
+        ));
+    
+        const scriptsPage = this.props.MetaReducer.scripts.map(script => (
+            <script src={`bower_components/${script}`}></script>
+        ));
 
-        <div className="container">
-            <div className="row">
-                <div className="col-sm"></div>
-                <div className="col-sm">
-                    {props.children}
+        return(
+            <body>
+                <noscript>
+                You need to enable JavaScript to run this app.
+                </noscript>
+
+                <div className="container">
+                    {this.props.children}
                 </div>
-            </div>
-        </div>
+                
+                {scriptsLanding}
+                {scriptsPage}
+            </body>
+        );
+    }
+}
 
-        {/* <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="bower_components/popper.js/dist/popper.min.js"></script>
-        <script src="bower_components/bootstrap/js/bootstrap.min.js"></script> */}
-    </body>
-);
-
+export default connect(state => state)(Body);
